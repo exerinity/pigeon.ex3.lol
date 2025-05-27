@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>pigeon: FAQ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/flow/s.css">
+</head>
+
+<body>
+    <main class="main-content">
+        <h1><a href="/i">pigeon</a>: FAQ</h1>
+        <footer>
+            Some answers are humorous. If they mislead you, find another bot to use, because I don't want to serve you.
+            Also, nobody actually asked these questions, I just made them up.
+        </footer><hr>
+        <p>
+            <strong>Q:</strong> What is this?<br>
+            <strong>A:</strong> An AI chatbot for Discord. In hindsight, ChatGPT in your server, but only dumber.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> I found a bug! How do I report it?<br>
+            <strong>A:</strong> Email me! <a href="mailto:me@ex3.lol">me@ex3.lol</a>
+        </p><hr>
+        <p>
+            <strong>Q:</strong> When was it made?<br>
+            <strong>A:</strong> September 2024. Idea coined July.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Why is the model so stupid?<br>
+            <strong>A:</strong> Because I'm still tuning the system instructions and constantly comparing models. If you want top-tier professional always-correct answers, you're in the wrong place.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Why won't it respond?<br>
+            <strong>A:</strong> Check that the bot has permission to send messages in the channel. If it does, check the
+            set channel using <code>/chat</code>. If none is set, set one using the same command. If one is set and it
+            has permissions, I blocked you from using the bot.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Are there limits?<br>
+            <strong>A:</strong> In terms of per chat? Yes, 200 messages. I plan on raising this as development
+            progresses, but it's not important. In terms of a rate limit? Not that I'm aware of. I didn't set any hard
+            limits, but the provider I use (Cloudflare) may set some.<br><br>
+            If you get over 200 messages, the oldest get overwritten, so it won't just suddenly "stop" when you reach
+            it.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Do you store chats?<br>
+            <strong>A:</strong> No, unless you run /history, which it is stored in on my external server for 3 days. I
+            do not check them unless someone has notified me of misuse or bugs. "External server" is sugarcoating that its a Cloudflare R2 bucket.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> I don't know how to use this! How?<br>
+            <strong>A:</strong> <a href="/i/tutorial" title="READ THE FUCKING MANUAL">RTFM</a>
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Is this just a ChatGPT wrapper?<br>
+            <strong>A:</strong> <br><img src="https://i.ex3.lol/well_yes_but_actually_no" style="width:100%; max-width:600px; margin:0 auto;" title="Well yes, but actually no" alt="Well yes, but actually no">
+        </p><hr>
+        <p>
+            <strong>Q:</strong> What model do you use?<br>
+            <strong>A:</strong> Llama 4 Scout
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Is it Cloudflare AI?<br>
+            <strong>A:</strong> Yes
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Why is it called pigeon?<br>
+            <strong>A:</strong> <a href="https://en.wikipedia.org/wiki/Pigeon_post" target="_blank">Because historically
+                pigeons delivered messages</a>. The name was chosen arbitrarily - it was just a random word and I later found a good
+            reason for it.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Can it generate images?<br>
+            <strong>A:</strong> Not yet, but my other bot <a href="https://bot.ex3.lol">ex3</a> can. I'm still figuring
+            out a good way for the model to be able to call image generation, because a direct command is pointless.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> How much does it cost to run this?<br>
+            <strong>A:</strong> Less than $15 a month. I make it simple, which results in not needing lots of resources.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> What is the knowledge cut-off date?<br>
+            <strong>A:</strong> August 2024
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Can I discuss explicit content with it?<br>
+            <strong>A:</strong> Probably not. You might get vague or confused answers, or a refusal. I didn't set any limits, but at the end of the day, it's Meta.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> What is this error?<br>
+            <strong>A:</strong> It depends. If it begins with "HTTP error", either I'm rate limited, or a reply took too
+            long or was too large. If it says "TypeError: Cannot read properties of undefined", you probably tried to
+            send a message and quickly clear your chat while it's still rendering. If it's none of those, email me with
+            it and I'll investigate.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Why is it so slow?<br>
+            <strong>A:</strong> pigeon does not stream responses unlike websites like ChatGPT. At idle, the response
+            times will be roughly the same. Streaming makes it feel faster.<br>
+            Otherwise, the bot is under some load. Try it later.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Why doesn't it stream responses?<br>
+            <strong>A:</strong> Because it's Discord. A chat app. It is theoretically possible, but absolutely
+            pointless.<br><br>
+            If you have no idea what that means, it means the bot only responds once generating is done. Things like ChatGPT, Gemini, or Copilot actively stream each word/token as they're generated.
+        </p><hr>
+        <p>
+            <strong>Q:</strong> Who are you?<br>
+            <strong>A:</strong> <a href="https://ex3.lol/about">https://ex3.lol/about</a>
+        </p>
+        <h3>
+            If, for some reason, you're still in need of help, please email me <a href="mailto:me@ex3.lol">here</a>. Or, alternatively, I'm in pretty much every guild it's in, so just @ me.
+        </h3>
+
+    </main>
+</body>
+
+</html>
