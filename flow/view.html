@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>pigeon</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/flow/s.css">
+    <style>
+        .meta-box {
+            background: #111113;
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px #000a;
+        }
+
+        .meta-box h2 {
+            color: #00ff00;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-box p {
+            color: #00ff88;
+            margin: 0.2em 0;
+            font-size: 1rem;
+        }
+
+        .transcript-box {
+            background: #111113;
+            border-radius: 12px;
+            padding: 2rem 1rem;
+            min-height: 120px;
+            max-height: 60vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 16px #000a;
+        }
+
+        .bubble {
+            margin-bottom: 1.2em;
+            padding: 1em 1.2em;
+            border-radius: 10px;
+            max-width: 80%;
+            word-break: break-word;
+            background: #19191b;
+            color: #00ff00;
+            box-shadow: 0 2px 8px #0007;
+        }
+
+        .bubble.user {
+            background: #002200;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bubble.ai {
+            background: #19191b;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .bubble .sender {
+            font-size: 0.95em;
+            color: #00ff88;
+            margin-bottom: 0.2em;
+            font-weight: bold;
+        }
+
+        .bubble .content {
+            color: #00ff00;
+            font-size: 1em;
+        }
+
+        .error-message {
+            color: #ff0066;
+            text-align: center;
+            margin: 2em 0;
+        }
+
+        footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            color: #00ff88;
+            font-size: 0.95em;
+        }
+
+        footer a {
+            color: #00ff00;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main-content">
+        <h1><a href="/flow">pigeon</a>: transcript viewer</h1>
+        <hr>
+        <section>
+            <div id="metadata" class="meta-box">
+                <p id="guild"></p>
+                <p id="user"></p>
+                <p id="messages"></p>
+            </div>
+            <div id="transcript" class="transcript-box">
+                <p class="error-message">Loading...</p>
+            </div>
+            <button class="button"
+                onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=1095523301192904844'">Invite
+                pigeon</button>
+            <button class="button" onclick="window.location.href='/i/faq'">!! FAQ !!</button>
+            <button class="button" onclick="window.location.href='/i/tutorial'">Tutorial</button>
+        </section>
+    </main>
+    <script>
+        async function load() {
+            document.getElementById("guild").textContent = "Loading...";
+            try {
+                const transcript = new URLSearchParams(window.location.search).get("chat");
+                if (!transcript) throw new Error("no chat ID provided");
+
+                const url = `https://p.exerinity.com/${transcript}.json`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("failed loading");
+
+                const data = await response.json();
+
+                document.getElementById("guild").textContent = `Guild: ${data.metadata.guild} (ID: ${data.metadata.guildId})`;
+                document.getElementById("user").textContent = `User: ${data.metadata.user}`;
+                document.getElementById("messages").textContent = `Message count: ${data.messages.length}`;
+
+                const created = data.metadata.created * 1000; 
+                const expat = created + 3 * 24 * 60 * 60 * 1000;
+                const now = Date.now();
+                let note = `Created on: ${new Date(created).toLocaleString()}<br>`;
+                if (expat > now) {
+                    const msLeft = expat - now;
+                    const days = Math.floor(msLeft / (24 * 60 * 60 * 1000));
+                    const hours = Math.floor((msLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                    note += `Expires in: ${days} day${days !== 1 ? "s" : ""} / ${hours} hour${hours !== 1 ? "s" : ""}`;
+                } else {
+                    note += "Expired";
+                }
+
+                const mmm = document.getElementById("metadata");
+                const expiry = document.createElement("p");
+                expiry.innerHTML = note;
+                mmm.appendChild(expiry);
+
+                const container = document.getElementById("transcript");
+                container.innerHTML = "";
+
+                data.messages.forEach((message) => {
+                    const bubble = document.createElement("div");
+                    const isUser = "user" in message;
+                    const sender = isUser ? data.metadata.user : "pigeon";
+                    const content = isUser ? message.user : message.ai;
+
+                    bubble.className = "bubble " + (isUser ? "user" : "ai");
+                    bubble.innerHTML = `
+                        <div class="sender">${sender}</div>
+                        <div class="content">${content}</div>
+                    `;
+                    container.appendChild(bubble);
+                });
+            } catch (error) {
+                console.error(error);
+                const transcriptDiv = document.getElementById("transcript");
+                if (error.message === "no chat ID provided") {
+                    transcriptDiv.innerHTML = '<p class="error-message">no chat ID provided</p>';
+                } else if (error.message === "failed loading") {
+                    transcriptDiv.innerHTML = '<p class="error-message">That ID was invalid. Chats expire after 3 days.</p>';
+                } else {
+                    transcriptDiv.innerHTML = '<p class="error-message">an unexpected error occurred</p>';
+                }
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", load);
+    </script>
+</body>
+
+</html>
